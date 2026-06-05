@@ -1,13 +1,46 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+
+// Routes import qilish
+const staffRoutes = require("./routes/staffRoutes");
+const tableRoutes = require("./routes/tableRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const menuItemRoutes = require("./routes/menuItemRoutes");
+
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
+
+// API Routes
 app.get("/", (req, res) => {
-  res.send("BitePlate API Running");
+  res.json({
+    message: "BitePlate API Running ✅",
+    version: "1.0.0",
+    endpoints: {
+      staff: "/api/staff",
+      tables: "/api/tables",
+      "menu-items": "/api/menu-items",
+      orders: "/api/orders"
+    }
+  });
 });
+
+// Xodimlar routelari
+app.use("/api/staff", staffRoutes);
+
+// Stollar routelari
+app.use("/api/tables", tableRoutes);
+
+// Menu item-lar routelari
+app.use("/api/menu-items", menuItemRoutes);
+
+// Buyurtmalar routelari
+app.use("/api/orders", orderRoutes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server ${PORT} portda ishlayapti...`);
 });
