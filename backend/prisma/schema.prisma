@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StaffRole {
+  MANAGER
+  WAITER
+  CHEF
+  CASHIER
+}
+
+enum TableStatus {
+  FREE
+  RESERVED
+  OCCUPIED
+  AWAITING_BILL
+  CLEARED
+}
+
+enum OrderStatus {
+  PENDING
+  PREPARING
+  READY
+  SERVED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  SPLIT
+}
+
+model Staff {
+  id          Int        @id @default(autoincrement())
+  fullName    String
+  email       String     @unique
+  password    String
+  role        StaffRole
+  createdAt   DateTime   @default(now())
+
+  orders      Order[]
+
+  @@map("staff")
+}
+
+model RestaurantTable {
+  id            Int           @id @default(autoincrement())
+  tableNumber   Int           @unique
+  capacity      Int
+  status        TableStatus   @default(FREE)
+
+  orders        Order[]
+  reservations  Reservation[]
+
+  @@map("restaurant_tables")
+}
+
+model Reservation {
+  id                Int               @id @default(autoincrement())
+  customerName      String
+  customerPhone     String
+  reservationTime   DateTime
+  guestCount        Int
+  createdAt         DateTime          @default(now())
+
+  tableId           Int
+  table             RestaurantTable   @relation(fields: [tableId], references: [id])
+
+  @@map("reservations")
+}
+
+model MenuItem {
+  id            Int          @id @default(autoincrement())
+  name          String
+  description   String
+  category      String
+  basePrice     Float
+  available     Boolean      @default(true)
+
+  orderItems    OrderItem[]
+
+  @@map("menu_items")
+}
+
+model Order {
+  id            Int                @id @default(autoincrement())
+  orderNumber   String             @unique
+  status        OrderStatus        @default(PENDING)
+  totalAmount   Float
+  createdAt     DateTime           @default(now())
+
+  tableId       Int
+  table         RestaurantTable    @relation(fields: [tableId], references: [id])
+
+  waiterId      Int
+  waiter        Staff              @relation(fields: [waiterId], references: [id])
+
+  orderItems    OrderItem[]
+  bill          Bill?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id            Int         @id @default(autoincrement())
+  quantity      Int
+  notes         String?
+  price         Float
+
+  orderId       Int
+  order         Order       @relation(fields: [orderId], references: [id])
+
+  menuItemId    Int
+  menuItem      MenuItem    @relation(fields: [menuItemId], references: [id])
+
+  @@map("order_items")
+}
+
+model Bill {
+  id              Int              @id @default(autoincrement())
+  subtotal        Float
+  tax             Float
+  discount        Float
+  total           Float
+  paymentMethod   PaymentMethod
+  createdAt       DateTime         @default(now())
+
+  orderId         Int              @unique
+  order           Order            @relation(fields: [orderId], references: [id])
+
+  @@map("bills")
+}
+
+model OrderHistoryLog {
+  id              Int         @id @default(autoincrement())
+  orderId         Int
+  tableNumber     Int
+  waiterId        Int
+  totalAmount     Float
+  timestamp       DateTime    @default(now())
+
+  @@map("order_history_logs")
+}
