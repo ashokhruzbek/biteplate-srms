@@ -17,6 +17,7 @@ const ManagerDashboardNotifier = require(
 const KitchenDisplayNotifier = require(
   "../patterns/observer/KitchenDisplayNotifier"
 );
+const BillingFacade = require("../patterns/facade/BillingFacade");
 
 const PRICING_STRATEGIES = {
   STANDARD: new StandardPricing(),
@@ -35,6 +36,9 @@ const orderStatusSubject = new OrderStatusSubject();
 orderStatusSubject.attach(new WaiterNotifier());
 orderStatusSubject.attach(new ManagerDashboardNotifier());
 orderStatusSubject.attach(new KitchenDisplayNotifier());
+
+// Facade Pattern: billing subsystem uchun yagona sodda interface
+const billingFacade = new BillingFacade();
 
 class OrderService {
   // Runtime-da kerakli pricing strategiyani tanlash
@@ -156,6 +160,13 @@ class OrderService {
     }
 
     return order;
+  }
+
+  // Facade Pattern: order uchun bill yaratish
+  async generateOrderBill(orderId, options = {}) {
+    const order = await this.getOrderById(orderId);
+
+    return billingFacade.generateBill(order, options);
   }
 
   // Command Pattern: order-ni kitchen tayyorlash jarayoniga o'tkazish

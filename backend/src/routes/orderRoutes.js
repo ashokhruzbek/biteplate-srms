@@ -27,6 +27,11 @@ router.patch("/:id/cancel", (req, res) =>
   OrderController.cancelOrder(req, res)
 );
 
+// POST /api/orders/:id/bill - Facade orqali bill yaratish
+router.post("/:id/bill", (req, res) =>
+  OrderController.generateOrderBill(req, res)
+);
+
 // GET /api/orders/:id - Bir buyurtmani ID bo'yicha olish
 router.get("/:id", (req, res) => OrderController.getOrderById(req, res));
 

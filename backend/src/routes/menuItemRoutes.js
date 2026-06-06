@@ -12,6 +12,11 @@ router.post("/", (req, res) => MenuItemController.createMenuItem(req, res));
 // GET /api/menu-items - Barcha menu item-larni olish
 router.get("/", (req, res) => MenuItemController.getAllMenuItems(req, res));
 
+// POST /api/menu-items/customize - Decorator orqali menu item customize qilish
+router.post("/customize", (req, res) =>
+  MenuItemController.customizeMenuItem(req, res)
+);
+
 // GET /api/menu-items/:id - Bir menu item-ni ID bo'yicha olish (optional)
 router.get("/:id", (req, res) => MenuItemController.getMenuItemById(req, res));
 

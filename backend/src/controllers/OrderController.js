@@ -71,6 +71,30 @@ class OrderController {
     }
   }
 
+  // Buyurtma uchun bill yaratish
+  async generateOrderBill(req, res) {
+    try {
+      const { id } = req.params;
+      const { tipPercentage, peopleCount } = req.body;
+
+      const bill = await OrderService.generateOrderBill(id, {
+        tipPercentage,
+        peopleCount,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "Bill muvaffaqiyatli yaratildi",
+        data: bill,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
   // Buyurtmani kitchen tayyorlash jarayoniga o'tkazish
   async prepareOrder(req, res) {
     try {

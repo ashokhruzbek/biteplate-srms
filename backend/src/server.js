@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
 require("dotenv").config();
 
 // Routes import qilish
@@ -15,6 +17,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Swagger API documentation
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // API Routes
 app.get("/", (req, res) => {
   res.json({
@@ -25,7 +30,8 @@ app.get("/", (req, res) => {
       tables: "/api/tables",
       "menu-items": "/api/menu-items",
       orders: "/api/orders",
-      "order-history": "/api/order-history"
+      "order-history": "/api/order-history",
+      docs: "/api-docs"
     }
   });
 });

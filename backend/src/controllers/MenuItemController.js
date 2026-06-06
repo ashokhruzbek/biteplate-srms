@@ -2,6 +2,7 @@
 // Controller - API qo'ngiroqlarni qabul qiladi va service ga o'tkazadi
 
 const MenuItemService = require("../services/MenuItemService");
+const MenuCustomizationService = require("../services/MenuCustomizationService");
 
 class MenuItemController {
   // Yangi menu item qo'shish
@@ -65,6 +66,29 @@ class MenuItemController {
       });
     } catch (error) {
       res.status(404).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+  // Decorator Pattern: menu item-ni dynamic customize qilish
+  async customizeMenuItem(req, res) {
+    try {
+      const { name, basePrice, extras } = req.body;
+      const customizedMenuItem = MenuCustomizationService.customizeMenuItem(
+        name,
+        basePrice,
+        extras
+      );
+
+      res.status(200).json({
+        success: true,
+        message: "Menu item customize qilindi",
+        data: customizedMenuItem,
+      });
+    } catch (error) {
+      res.status(400).json({
         success: false,
         message: error.message,
       });
