@@ -103,6 +103,35 @@ class OrderRepository {
     }
   }
 
+  // Buyurtma statusini yangilash
+  async updateOrderStatus(orderId, status) {
+    try {
+      const order = await prisma.order.update({
+        where: { id: parseInt(orderId) },
+        data: { status },
+        include: {
+          orderItems: {
+            include: {
+              menuItem: true,
+            },
+          },
+          table: true,
+          waiter: {
+            select: {
+              id: true,
+              fullName: true,
+              role: true,
+            },
+          },
+        },
+      });
+
+      return order;
+    } catch (error) {
+      throw new Error(`Buyurtma statusini yangilashda xato: ${error.message}`);
+    }
+  }
+
   // Stol mavjudligini tekshirish
   async checkTableExists(tableId) {
     try {

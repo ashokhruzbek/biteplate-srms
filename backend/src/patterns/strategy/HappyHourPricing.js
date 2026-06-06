@@ -15,11 +15,6 @@ class HappyHourPricing extends PricingStrategy {
     const discountAmount = subtotal * discountPercentage;
     const total = subtotal - discountAmount;
 
-    // Info uchun: Haqiqiy loyihada log qilish kerak
-    console.log(
-      `Happy Hour: Subtotal=${subtotal}, Discount=${discountAmount}, Total=${total}`
-    );
-
     return total;
   }
 

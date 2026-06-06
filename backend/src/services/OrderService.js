@@ -2,10 +2,45 @@
 // Service - validation va business logic bu yerda
 
 const OrderRepository = require("../repositories/OrderRepository");
+const StandardPricing = require("../patterns/strategy/StandardPricing");
+const HappyHourPricing = require("../patterns/strategy/HappyHourPricing");
+const LoyaltyCardPricing = require("../patterns/strategy/LoyaltyCardPricing");
+const KitchenQueue = require("../patterns/command/KitchenQueue");
+const PrepareOrderCommand = require("../patterns/command/PrepareOrderCommand");
+const CancelOrderCommand = require("../patterns/command/CancelOrderCommand");
+const OrderHistoryLog = require("../patterns/singleton/OrderHistoryLog");
+
+const PRICING_STRATEGIES = {
+  STANDARD: new StandardPricing(),
+  HAPPY_HOUR: new HappyHourPricing(),
+  LOYALTY: new LoyaltyCardPricing(),
+};
+
+// Invoker: kitchen command history hozircha memory-da saqlanadi
+const kitchenQueue = new KitchenQueue();
+
+// Singleton: butun system bitta order history log instance-dan foydalanadi
+const orderHistoryLog = OrderHistoryLog.getInstance();
 
 class OrderService {
+  // Runtime-da kerakli pricing strategiyani tanlash
+  getPricingStrategy(pricingMode = "STANDARD") {
+    const normalizedPricingMode = String(
+      pricingMode || "STANDARD"
+    ).toUpperCase();
+    const pricingStrategy = PRICING_STRATEGIES[normalizedPricingMode];
+
+    if (!pricingStrategy) {
+      throw new Error(
+        "Invalid pricingMode. Allowed modes: STANDARD, HAPPY_HOUR, LOYALTY"
+      );
+    }
+
+    return pricingStrategy;
+  }
+
   // Yangi buyurtma qo'shish
-  async createOrder(tableId, waiterId, items) {
+  async createOrder(tableId, waiterId, items, pricingMode = "STANDARD") {
     // 1. Kerakli fieldlarni tekshirish
     if (!tableId || !waiterId || !items) {
       throw new Error("tableId, waiterId va items to'ldirilishi kerak");
@@ -28,8 +63,7 @@ class OrderService {
       throw new Error("Xodim topilmadi");
     }
 
-    // 5. Menu items-larni tekshirish va total hisoblash
-    let totalAmount = 0;
+    // 5. Menu items-larni tekshirish va strategy uchun tayyorlash
     const preparedItems = [];
 
     for (const item of items) {
@@ -61,7 +95,6 @@ class OrderService {
 
       // Narxni hisoblash
       const itemPrice = menuItem.basePrice * item.quantity;
-      totalAmount += itemPrice;
 
       // Item prepare qilish (database-ga yozish uchun)
       preparedItems.push({
@@ -71,7 +104,11 @@ class OrderService {
       });
     }
 
-    // 6. Buyurtma yaratish
+    // 6. Strategy Pattern: tanlangan pricing algoritm orqali total hisoblash
+    const pricingStrategy = this.getPricingStrategy(pricingMode);
+    const totalAmount = pricingStrategy.calculateTotal(preparedItems);
+
+    // 7. Buyurtma yaratish
     const orderData = {
       tableId: parseInt(tableId),
       waiterId: parseInt(waiterId),
@@ -80,6 +117,7 @@ class OrderService {
     };
 
     const newOrder = await OrderRepository.createOrder(orderData);
+    orderHistoryLog.addOrder(newOrder);
 
     return newOrder;
   }
@@ -104,6 +142,27 @@ class OrderService {
     }
 
     return order;
+  }
+
+  // Command Pattern: order-ni kitchen tayyorlash jarayoniga o'tkazish
+  async prepareOrder(orderId) {
+    const order = await this.getOrderById(orderId);
+    const command = new PrepareOrderCommand(order, OrderRepository);
+
+    return kitchenQueue.executeCommand(command);
+  }
+
+  // Command Pattern: order-ni bekor qilish
+  async cancelOrder(orderId) {
+    const order = await this.getOrderById(orderId);
+    const command = new CancelOrderCommand(order, OrderRepository);
+
+    return kitchenQueue.executeCommand(command);
+  }
+
+  // Command Pattern: oxirgi kitchen action-ni undo qilish
+  async undoLastKitchenAction() {
+    return kitchenQueue.undoLastCommand();
   }
 }
 
