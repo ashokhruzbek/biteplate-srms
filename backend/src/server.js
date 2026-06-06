@@ -18,7 +18,13 @@ app.use(cors());
 app.use(express.json());
 
 // Swagger API documentation
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+  }),
+);
 
 // API Routes
 app.get("/", (req, res) => {

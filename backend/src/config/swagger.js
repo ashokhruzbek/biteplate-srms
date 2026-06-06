@@ -14,12 +14,12 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:5000",
-      description: "Development server",
+      url: "https://biteplate-srms.onrender.com",
+      description: "Production server",
     },
     {
-      url: "https://api.biteplate.example.com",
-      description: "Production server placeholder",
+      url: "http://localhost:5000",
+      description: "Local server",
     },
   ],
   tags: [
@@ -41,11 +41,13 @@ const swaggerDefinition = {
     },
     {
       name: "Billing",
-      description: "Generate educational billing calculations through a facade.",
+      description:
+        "Generate educational billing calculations through a facade.",
     },
     {
       name: "Order History",
-      description: "Read singleton order history and iterator traversal output.",
+      description:
+        "Read singleton order history and iterator traversal output.",
     },
   ],
   components: {
@@ -113,7 +115,10 @@ const swaggerDefinition = {
         type: "object",
         properties: {
           id: { type: "integer", example: 1 },
-          orderNumber: { type: "string", example: "ORD-1780720000000-ab12cd34" },
+          orderNumber: {
+            type: "string",
+            example: "ORD-1780720000000-ab12cd34",
+          },
           status: {
             type: "string",
             enum: ["PENDING", "PREPARING", "READY", "SERVED", "CANCELLED"],
@@ -147,7 +152,10 @@ const swaggerDefinition = {
         type: "object",
         properties: {
           orderId: { type: "integer", example: 1 },
-          orderNumber: { type: "string", example: "ORD-1780720000000-ab12cd34" },
+          orderNumber: {
+            type: "string",
+            example: "ORD-1780720000000-ab12cd34",
+          },
           tableId: { type: "integer", example: 1 },
           waiterId: { type: "integer", example: 1 },
           totalAmount: { type: "number", example: 40 },
@@ -371,7 +379,8 @@ const swaggerDefinition = {
       post: {
         tags: ["Table Management"],
         summary: "Create restaurant table",
-        description: "Creates a new restaurant table with table number and capacity.",
+        description:
+          "Creates a new restaurant table with table number and capacity.",
         requestBody: {
           required: true,
           content: {
@@ -461,7 +470,8 @@ const swaggerDefinition = {
       patch: {
         tags: ["Table Management"],
         summary: "Update table status",
-        description: "Updates the current operational status of a restaurant table.",
+        description:
+          "Updates the current operational status of a restaurant table.",
         parameters: [{ $ref: "#/components/parameters/IdParam" }],
         requestBody: {
           required: true,
@@ -682,7 +692,8 @@ const swaggerDefinition = {
       get: {
         tags: ["Order Management"],
         summary: "Get all orders",
-        description: "Returns all orders with related table, waiter, and order item data.",
+        description:
+          "Returns all orders with related table, waiter, and order item data.",
         responses: {
           200: {
             description: "Order list returned successfully.",
