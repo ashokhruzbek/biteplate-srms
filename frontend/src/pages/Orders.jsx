@@ -264,6 +264,7 @@ function Orders() {
 
       <div className="orders-page__content">
         <SectionCard
+          id="orders-create"
           title="Buyurtma yaratish"
           description="Stol, ofitsiant va menyu mahsulotini tanlab buyurtma yarating."
         >
@@ -280,7 +281,7 @@ function Orders() {
           />
         </SectionCard>
 
-        <div className="orders-page__main">
+        <div className="orders-page__main" id="orders-billing">
           {generatedBill ? (
             <BillCard
               bill={generatedBill.bill}
@@ -290,6 +291,7 @@ function Orders() {
           ) : null}
 
           <SectionCard
+            id="orders-list"
             title="Buyurtmalar ro‘yxati"
             description="Tizimdagi joriy buyurtmalar."
           >

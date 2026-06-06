@@ -7,6 +7,16 @@
   background: var(--color-surface);
   box-shadow: var(--shadow-soft);
   padding: 20px;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.stat-card:hover {
+  border-color: #d3ddd9;
+  box-shadow: 0 18px 38px rgba(17, 24, 39, 0.08);
+  transform: translateY(-1px);
 }
 
 .stat-card__icon {
@@ -50,6 +60,14 @@
   border-radius: 8px;
   background: var(--color-surface);
   box-shadow: var(--shadow-soft);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.section-card:hover {
+  border-color: #d3ddd9;
+  box-shadow: 0 18px 38px rgba(17, 24, 39, 0.08);
 }
 
 .section-card__header {
@@ -91,6 +109,10 @@
   line-height: 1;
   padding: 7px 10px;
   white-space: nowrap;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .status-badge--pending {
@@ -118,6 +140,7 @@
   color: var(--color-text-muted);
   font-size: 14px;
   font-weight: 600;
+  line-height: 1.35;
 }
 
 .loading-spinner__mark {
@@ -134,6 +157,11 @@
   align-items: flex-start;
   gap: 14px;
   padding: 28px 24px;
+  transition: background-color 0.18s ease;
+}
+
+.empty-state:hover {
+  background: rgba(241, 245, 244, 0.55);
 }
 
 .empty-state__icon {
@@ -220,6 +248,10 @@
   color: var(--color-heading);
   font-size: 14px;
   padding: 10px 12px;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .form-field input::placeholder,
@@ -260,6 +292,9 @@
   font-size: 14px;
   line-height: 1.45;
   padding: 10px 12px;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .form-message svg {
@@ -299,10 +334,15 @@
   background: var(--color-primary);
   color: #ffffff;
   padding: 10px 16px;
+  transition:
+    background-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 }
 
 .primary-button:hover {
   background: #1f5d4c;
+  transform: translateY(-1px);
 }
 
 .primary-button:focus-visible,
@@ -336,6 +376,10 @@
   background: var(--color-surface);
   color: var(--color-heading);
   padding: 8px 12px;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .secondary-button:hover {
@@ -350,6 +394,10 @@
   font-size: 13px;
   padding: 7px 10px;
   white-space: nowrap;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .table-action:hover {
@@ -372,6 +420,10 @@
   background: var(--color-surface);
   color: var(--color-text-muted);
   padding: 0;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .icon-button:hover {

@@ -28,13 +28,16 @@
 }
 
 html {
+  height: 100%;
   min-height: 100%;
 }
 
 body {
   min-width: 320px;
+  height: 100%;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 button,
@@ -57,5 +60,6 @@ h3 {
 }
 
 #root {
+  height: 100%;
   min-height: 100vh;
 }

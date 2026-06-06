@@ -87,6 +87,7 @@ function Staff() {
 
       <div className="staff-page__content">
         <SectionCard
+          id="staff-create"
           title="Xodim yaratish"
           description="Xodim uchun asosiy maʼlumot va lavozimni kiriting."
         >
@@ -99,6 +100,7 @@ function Staff() {
         </SectionCard>
 
         <SectionCard
+          id="staff-list"
           title="Xodimlar ro‘yxati"
           description="Tizimda mavjud xodimlar ro‘yxati."
         >

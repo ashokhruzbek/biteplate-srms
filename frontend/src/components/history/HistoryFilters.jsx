@@ -39,7 +39,7 @@ function HistoryFilters({
         </label>
 
         <label className="form-field">
-          <span>Stol bo‘yicha</span>
+          <span>Stol bo'yicha</span>
           <select
             value={filters.tableId}
             onChange={(event) => onFilterChange('tableId', event.target.value)}
@@ -60,7 +60,8 @@ function HistoryFilters({
             type="search"
             value={searchTerm}
             onChange={(event) => onSearchChange(event.target.value)}
-            placeholder="Buyurtma raqami bo‘yicha qidirish"
+            placeholder="Buyurtma raqami bo'yicha qidirish"
+            disabled={isLoading}
           />
         </label>
       </div>

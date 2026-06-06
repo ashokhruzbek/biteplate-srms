@@ -1,4 +1,4 @@
-import apiClient from '../api/apiClient'
+import apiClient from '../api/client'
 import { getApiErrorMessage } from '../utils/apiError'
 
 export async function getOrderHistory(filters = {}) {
@@ -12,7 +12,7 @@ export async function getOrderHistory(filters = {}) {
 
     return response.data?.data || []
   } catch (error) {
-    throw new Error(getApiErrorMessage(error, 'Buyurtmalar tarixini yuklab bo‘lmadi'), {
+    throw new Error(getApiErrorMessage(error, 'Buyurtmalar tarixini yuklab bo\'lmadi'), {
       cause: error,
     })
   }
@@ -23,7 +23,7 @@ export async function getOrderHistoryByTable(tableId) {
     const response = await apiClient.get(`/api/order-history/table/${tableId}`)
     return response.data?.data || []
   } catch (error) {
-    throw new Error(getApiErrorMessage(error, 'Stol bo‘yicha tarixni yuklab bo‘lmadi'), {
+    throw new Error(getApiErrorMessage(error, 'Stol bo\'yicha tarixni yuklab bo\'lmadi'), {
       cause: error,
     })
   }
@@ -34,7 +34,7 @@ export async function getPopularHistoryItem() {
     const response = await apiClient.get('/api/order-history/popular-item')
     return response.data?.data || null
   } catch (error) {
-    throw new Error(getApiErrorMessage(error, 'Mashhur taomni yuklab bo‘lmadi'), {
+    throw new Error(getApiErrorMessage(error, 'Mashhur taomni yuklab bo\'lmadi'), {
       cause: error,
     })
   }
@@ -45,7 +45,7 @@ export async function getIteratorHistoryRecords() {
     const response = await apiClient.get('/api/order-history/iterate')
     return response.data?.data || []
   } catch (error) {
-    throw new Error(getApiErrorMessage(error, 'Iterator natijalarini yuklab bo‘lmadi'), {
+    throw new Error(getApiErrorMessage(error, 'Iterator natijalarini yuklab bo\'lmadi'), {
       cause: error,
     })
   }

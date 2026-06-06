@@ -166,6 +166,7 @@ function Menu() {
       <div className="menu-page__content">
         <div className="menu-page__side">
           <SectionCard
+            id="menu-create"
             title="Yangi taom qo‘shish"
             description="Menyu uchun asosiy mahsulot maʼlumotlarini kiriting."
           >
@@ -178,6 +179,7 @@ function Menu() {
           </SectionCard>
 
           <SectionCard
+            id="menu-customize"
             title="Taomni moslashtirish"
             description="Tanlangan taomga qo‘shimcha variantlarni qo‘shing."
           >
@@ -192,6 +194,7 @@ function Menu() {
         </div>
 
         <SectionCard
+          id="menu-list"
           title="Menyu ro‘yxati"
           description="Mavjud taom va ichimliklar ro‘yxati."
         >

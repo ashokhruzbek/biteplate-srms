@@ -1,6 +1,6 @@
-function SectionCard({ title, description, children }) {
+function SectionCard({ id, title, description, children }) {
   return (
-    <section className="section-card">
+    <section className="section-card" id={id}>
       <div className="section-card__header">
         <div>
           <h2>{title}</h2>

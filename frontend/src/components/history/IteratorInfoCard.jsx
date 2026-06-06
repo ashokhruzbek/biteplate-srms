@@ -44,8 +44,8 @@ function IteratorInfoCard({ records, isLoading, error }) {
     return (
       <EmptyState
         icon={GitBranch}
-        title="Iterator natijalari yo‘q"
-        description="Tarix yozuvlari mavjud bo‘lganda traversal natijalari ko‘rinadi."
+        title="Iterator natijalari yo'q"
+        description="Tarix yozuvlari mavjud bo'lganda traversal natijalari ko'rinadi."
       />
     )
   }
@@ -53,8 +53,8 @@ function IteratorInfoCard({ records, isLoading, error }) {
   return (
     <div className="iterator-card">
       <p>
-        History records iterator orqali ketma-ket traversal qilinmoqda. Quyida
-        traversal natijasidagi dastlabki yozuvlar ko‘rsatilgan.
+        Tarix yozuvlari iterator orqali ketma-ket traversal qilinmoqda. Quyida
+        traversal natijasidagi dastlabki yozuvlar ko'rsatilgan.
       </p>
       <div className="iterator-card__list">
         {iteratorRecords.map((record) => (

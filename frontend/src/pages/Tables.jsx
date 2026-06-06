@@ -203,6 +203,7 @@ function Tables() {
 
       <div className="tables-page__content">
         <SectionCard
+          id="tables-create"
           title="Yangi stol qo‘shish"
           description="Stol raqami va sig‘imini kiriting."
         >
@@ -215,6 +216,7 @@ function Tables() {
         </SectionCard>
 
         <SectionCard
+          id="tables-list"
           title="Stollar holati"
           description="Stollarni POS uslubida ko‘ring va holatini tez o‘zgartiring."
         >
@@ -235,14 +237,12 @@ function Tables() {
             </div>
           ) : loadError ? (
             <EmptyState
-              icon={Armchair}
               icon={Table2}
               title="Stollar yuklanmadi"
               description={loadError}
             />
           ) : filteredTables.length === 0 ? (
             <EmptyState
-              icon={Armchair}
               icon={Table2}
               title="Stol topilmadi"
               description="Qidiruv yoki filter qiymatini o‘zgartirib ko‘ring."
