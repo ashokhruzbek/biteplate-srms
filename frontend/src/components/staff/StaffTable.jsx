@@ -1,0 +1,56 @@
+import { AlertCircle, UsersRound } from 'lucide-react'
+import EmptyState from '../ui/EmptyState'
+import LoadingSpinner from '../ui/LoadingSpinner'
+import StaffTableRow from './StaffTableRow'
+
+function StaffTable({ staff, isLoading, error }) {
+  if (isLoading) {
+    return (
+      <div className="staff-table__feedback">
+        <LoadingSpinner label="Xodimlar yuklanmoqda" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <EmptyState
+        icon={AlertCircle}
+        title="Xodimlar maʼlumoti yuklanmadi"
+        description={error}
+      />
+    )
+  }
+
+  if (staff.length === 0) {
+    return (
+      <EmptyState
+        icon={UsersRound}
+        title="Xodimlar yo‘q"
+        description="Yaratilgan xodimlar shu yerda ko‘rinadi."
+      />
+    )
+  }
+
+  return (
+    <div className="staff-table data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>To‘liq ism</th>
+            <th>Email</th>
+            <th>Lavozim</th>
+            <th>Yaratilgan vaqt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {staff.map((member) => (
+            <StaffTableRow key={member.id || member.email} member={member} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+export default StaffTable

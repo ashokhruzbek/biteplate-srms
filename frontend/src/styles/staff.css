@@ -1,0 +1,110 @@
+.staff-page {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.staff-page .page-header {
+  max-width: none;
+}
+
+.staff-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.staff-page__content {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(420px, 1.35fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.staff-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+}
+
+.staff-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.staff-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.staff-table__feedback {
+  padding: 28px 24px;
+}
+
+.staff-table td:first-child {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dfe5e2;
+  border-radius: 999px;
+  background: #f5f7f6;
+  color: #4a5754;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 7px 10px;
+  white-space: nowrap;
+}
+
+.role-badge--manager {
+  border-color: #c8d8e6;
+  background: #eef5fa;
+  color: #285b78;
+}
+
+.role-badge--waiter {
+  border-color: #c8ded4;
+  background: #eef8f3;
+  color: #236247;
+}
+
+.role-badge--cashier {
+  border-color: #ead7a8;
+  background: #fbf6e8;
+  color: #765a16;
+}
+
+@media (max-width: 1180px) {
+  .staff-page__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1120px) {
+  .staff-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .staff-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-form {
+    padding: 20px;
+  }
+
+  .staff-form__actions,
+  .staff-page .primary-button {
+    width: 100%;
+  }
+}

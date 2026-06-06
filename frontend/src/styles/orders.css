@@ -1,0 +1,192 @@
+.orders-page {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.orders-page .page-header {
+  max-width: none;
+}
+
+.orders-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.orders-page__content {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(520px, 1.35fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.orders-page__main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+}
+
+.order-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.order-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.orders-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 24px;
+}
+
+.orders-action-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border-bottom: 1px solid #e7c6c1;
+  background: #fbefed;
+  color: #8f3d32;
+  font-size: 14px;
+  line-height: 1.45;
+  padding: 12px 24px;
+}
+
+.orders-action-error svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.orders-table__feedback {
+  padding: 28px 24px;
+}
+
+.orders-table td:first-child {
+  color: var(--color-heading);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-width: 250px;
+}
+
+.bill-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.bill-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--color-border);
+  padding: 20px 24px;
+}
+
+.bill-card__header h3 {
+  color: var(--color-heading);
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.bill-card__header p {
+  margin-top: 5px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.bill-card__list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 0;
+  margin: 0;
+}
+
+.bill-card__list div {
+  border-right: 1px solid var(--color-border);
+  padding: 18px 20px;
+}
+
+.bill-card__list div:last-child {
+  border-right: 0;
+}
+
+.bill-card__list dt {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bill-card__list dd {
+  margin: 6px 0 0;
+  color: var(--color-heading);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+  .orders-page__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1120px) {
+  .orders-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bill-card__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bill-card__list div {
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+@media (max-width: 620px) {
+  .orders-stats,
+  .bill-card__list {
+    grid-template-columns: 1fr;
+  }
+
+  .order-form {
+    padding: 20px;
+  }
+
+  .order-form__actions,
+  .orders-page .primary-button,
+  .orders-page .secondary-button {
+    width: 100%;
+  }
+
+  .orders-toolbar {
+    justify-content: stretch;
+    padding: 14px 20px;
+  }
+
+  .bill-card__list div {
+    border-right: 0;
+  }
+}

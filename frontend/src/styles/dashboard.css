@@ -1,0 +1,234 @@
+.dashboard {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-hero {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  padding: 28px;
+}
+
+.dashboard-hero__date {
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.dashboard-hero h1 {
+  color: var(--color-heading);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.dashboard-hero p {
+  max-width: 760px;
+  margin-top: 10px;
+  color: var(--color-text-muted);
+  font-size: 16px;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-stat-card {
+  display: flex;
+  min-height: 138px;
+  gap: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  padding: 20px;
+}
+
+.dashboard-stat-card__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.dashboard-stat-card__content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dashboard-stat-card__content span {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.dashboard-stat-card__content strong {
+  color: var(--color-heading);
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.dashboard-stat-card__content p {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.dashboard-stat-card__content .dashboard-stat-card__error {
+  color: #8f3d32;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard-sidebar {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-section {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.dashboard-section__header {
+  border-bottom: 1px solid var(--color-border);
+  padding: 22px 24px;
+}
+
+.dashboard-section__header h2 {
+  color: var(--color-heading);
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.dashboard-section__header p {
+  margin-top: 6px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.dashboard-section__body {
+  padding: 0;
+}
+
+.dashboard-section__feedback {
+  padding: 28px 24px;
+}
+
+.dashboard-orders td:first-child {
+  color: var(--color-heading);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.dashboard-orders td:nth-child(4) {
+  color: var(--color-heading);
+  font-weight: 800;
+}
+
+.popular-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+}
+
+.popular-item span {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.popular-item strong {
+  color: var(--color-heading);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.popular-item p {
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.table-status-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.table-status-summary div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--color-border);
+  padding: 18px 24px;
+}
+
+.table-status-summary div:last-child {
+  border-bottom: 0;
+}
+
+.table-status-summary span {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.table-status-summary strong {
+  color: var(--color-heading);
+  font-size: 24px;
+  line-height: 1;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .dashboard-hero {
+    padding: 22px;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 28px;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-section__header,
+  .popular-item,
+  .table-status-summary div {
+    padding-inline: 20px;
+  }
+}
