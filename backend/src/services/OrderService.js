@@ -9,6 +9,14 @@ const KitchenQueue = require("../patterns/command/KitchenQueue");
 const PrepareOrderCommand = require("../patterns/command/PrepareOrderCommand");
 const CancelOrderCommand = require("../patterns/command/CancelOrderCommand");
 const OrderHistoryLog = require("../patterns/singleton/OrderHistoryLog");
+const OrderStatusSubject = require("../patterns/observer/OrderStatusSubject");
+const WaiterNotifier = require("../patterns/observer/WaiterNotifier");
+const ManagerDashboardNotifier = require(
+  "../patterns/observer/ManagerDashboardNotifier"
+);
+const KitchenDisplayNotifier = require(
+  "../patterns/observer/KitchenDisplayNotifier"
+);
 
 const PRICING_STRATEGIES = {
   STANDARD: new StandardPricing(),
@@ -21,6 +29,12 @@ const kitchenQueue = new KitchenQueue();
 
 // Singleton: butun system bitta order history log instance-dan foydalanadi
 const orderHistoryLog = OrderHistoryLog.getInstance();
+
+// Observer Pattern: order status o'zgarganda barcha observer-lar xabar oladi
+const orderStatusSubject = new OrderStatusSubject();
+orderStatusSubject.attach(new WaiterNotifier());
+orderStatusSubject.attach(new ManagerDashboardNotifier());
+orderStatusSubject.attach(new KitchenDisplayNotifier());
 
 class OrderService {
   // Runtime-da kerakli pricing strategiyani tanlash
@@ -148,16 +162,22 @@ class OrderService {
   async prepareOrder(orderId) {
     const order = await this.getOrderById(orderId);
     const command = new PrepareOrderCommand(order, OrderRepository);
+    const updatedOrder = await kitchenQueue.executeCommand(command);
 
-    return kitchenQueue.executeCommand(command);
+    orderStatusSubject.notify(updatedOrder);
+
+    return updatedOrder;
   }
 
   // Command Pattern: order-ni bekor qilish
   async cancelOrder(orderId) {
     const order = await this.getOrderById(orderId);
     const command = new CancelOrderCommand(order, OrderRepository);
+    const updatedOrder = await kitchenQueue.executeCommand(command);
 
-    return kitchenQueue.executeCommand(command);
+    orderStatusSubject.notify(updatedOrder);
+
+    return updatedOrder;
   }
 
   // Command Pattern: oxirgi kitchen action-ni undo qilish
