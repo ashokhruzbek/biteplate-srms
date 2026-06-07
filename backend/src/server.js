@@ -10,6 +10,7 @@ const tableRoutes = require("./routes/tableRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const menuItemRoutes = require("./routes/menuItemRoutes");
 const orderHistoryRoutes = require("./routes/orderHistoryRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -37,10 +38,14 @@ app.get("/", (req, res) => {
       "menu-items": "/api/menu-items",
       orders: "/api/orders",
       "order-history": "/api/order-history",
+      auth: "/api/auth/login",
       docs: "/api-docs"
     }
   });
 });
+
+// Auth routelari
+app.use("/api/auth", authRoutes);
 
 // Xodimlar routelari
 app.use("/api/staff", staffRoutes);

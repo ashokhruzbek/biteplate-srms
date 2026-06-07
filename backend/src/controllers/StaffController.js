@@ -8,12 +8,12 @@ class StaffController {
   async createStaff(req, res) {
     try {
       // Request bodydan ma'lumotlarni olish
-      const { fullName, email, password, role } = req.body;
+      const { fullName, phoneNumber, password, role } = req.body;
 
       // Service-ga o'tkazish
       const newStaff = await StaffService.createStaff(
         fullName,
-        email,
+        phoneNumber,
         password,
         role
       );

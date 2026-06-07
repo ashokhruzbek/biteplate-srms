@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { ChevronDown, ChefHat,ShieldCheck,BadgeCheck,SlidersHorizontal ,Gem, Sparkles, X } from 'lucide-react'
+import { BadgeCheck, ChevronDown, X } from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
 import {
   getDefaultOpenNavigationIds,
   isNavigationChildActive,
@@ -12,8 +13,42 @@ function getGroupId(path) {
   return `sidebar-group-${path === '/' ? 'dashboard' : path.replace(/\W/g, '-')}`
 }
 
+/**
+ * Joriy rolga ko'ra navigatsiyani filtrlaydi.
+ * - childless item: path'ga ruxsat bo'lsa ko'rinadi.
+ * - group: o'zi yoki kamida bitta child'iga ruxsat bo'lsa ko'rinadi
+ *   (faqat ruxsat etilgan child'lar render qilinadi).
+ * - bo'sh section'lar yashiriladi.
+ */
+function getVisibleSections(canAccess) {
+  return navigationSections
+    .map((section) => {
+      const items = section.items
+        .map((item) => {
+          if (!item.children?.length) {
+            return canAccess(item.path) ? item : null
+          }
+
+          const children = item.children.filter((child) =>
+            canAccess(child.path),
+          )
+
+          if (!canAccess(item.path) && children.length === 0) {
+            return null
+          }
+
+          return { ...item, children }
+        })
+        .filter(Boolean)
+
+      return { ...section, items }
+    })
+    .filter((section) => section.items.length > 0)
+}
+
 function Sidebar({ isOpen = false, onClose }) {
   const location = useLocation()
+  const { canAccess } = useAuth()
   const [openGroups, setOpenGroups] = useState(() =>
     getDefaultOpenNavigationIds(location.pathname),
   )
@@ -37,6 +72,8 @@ function Sidebar({ isOpen = false, onClose }) {
         : [...currentGroups, path],
     )
   }
+
+  const visibleSections = getVisibleSections(canAccess)
 
   return (
     <>
@@ -74,7 +111,7 @@ function Sidebar({ isOpen = false, onClose }) {
         </div>
 
         <nav className="sidebar__nav" aria-label="Dashboard menyusi">
-          {navigationSections.map((section) => (
+          {visibleSections.map((section) => (
             <div className="sidebar__section" key={section.id}>
               <p className="sidebar__section-label">{section.label}</p>
 
@@ -158,7 +195,6 @@ function Sidebar({ isOpen = false, onClose }) {
                           const isChildActive = isNavigationChildActive(
                             child,
                             location.pathname,
-                            location.hash,
                           )
 
                           return (

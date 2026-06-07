@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ChevronRight, Clock, Menu } from 'lucide-react'
+import UserMenu from './UserMenu'
 import {
   getActiveNavigationTitle,
   getNavigationBreadcrumb,
@@ -66,6 +67,7 @@ function TopNavbar({ onMenuClick }) {
           <Clock size={15} aria-hidden="true" />
           {currentTime}
         </strong>
+        <UserMenu />
       </div>
     </header>
   )

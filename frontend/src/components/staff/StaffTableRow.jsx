@@ -6,7 +6,7 @@ function StaffTableRow({ member }) {
   return (
     <tr>
       <td>{member.fullName || '--'}</td>
-      <td>{member.email || '--'}</td>
+      <td>{member.phoneNumber || '--'}</td>
       <td>
         <span className={`role-badge role-badge--${role}`}>
           {formatRoleLabel(member.role)}

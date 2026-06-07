@@ -34,7 +34,7 @@ function StaffTable({ staff, isLoading, error }) {
         <thead>
           <tr>
             <th>To‘liq ism</th>
-            <th>Email</th>
+            <th>Telefon</th>
             <th>Lavozim</th>
             <th>Yaratilgan vaqt</th>
           </tr>

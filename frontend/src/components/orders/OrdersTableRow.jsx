@@ -9,6 +9,8 @@ import {
 function OrdersTableRow({
   order,
   isActionLoading,
+  canKitchen = true,
+  canBill = true,
   onPrepare,
   onCancel,
   onGenerateBill,
@@ -17,6 +19,7 @@ function OrdersTableRow({
   const isPreparing = order.status === 'PREPARING'
   const canPrepare = isPending && !isActionLoading
   const canCancel = (isPending || isPreparing) && !isActionLoading
+  const hasActions = canKitchen || canBill
 
   return (
     <tr>
@@ -33,31 +36,40 @@ function OrdersTableRow({
       <td>{formatDateTime(order.createdAt)}</td>
       <td>
         <div className="order-actions">
-          <button
-            type="button"
-            className="table-action"
-            onClick={() => onPrepare(order.id)}
-            disabled={!canPrepare}
-          >
-            Tayyorlash
-          </button>
-          <button
-            type="button"
-            className="table-action table-action--danger"
-            onClick={() => onCancel(order.id)}
-            disabled={!canCancel}
-          >
-            Bekor qilish
-          </button>
-          <button
-            type="button"
-            className="table-action"
-            onClick={() => onGenerateBill(order)}
-            disabled={isActionLoading}
-          >
-            <ReceiptText size={15} aria-hidden="true" />
-            Hisob
-          </button>
+          {canKitchen ? (
+            <>
+              <button
+                type="button"
+                className="table-action"
+                onClick={() => onPrepare(order.id)}
+                disabled={!canPrepare}
+              >
+                Tayyorlash
+              </button>
+              <button
+                type="button"
+                className="table-action table-action--danger"
+                onClick={() => onCancel(order.id)}
+                disabled={!canCancel}
+              >
+                Bekor qilish
+              </button>
+            </>
+          ) : null}
+          {canBill ? (
+            <button
+              type="button"
+              className="table-action"
+              onClick={() => onGenerateBill(order)}
+              disabled={isActionLoading}
+            >
+              <ReceiptText size={15} aria-hidden="true" />
+              Hisob
+            </button>
+          ) : null}
+          {!hasActions ? (
+            <span className="order-actions__empty">—</span>
+          ) : null}
         </div>
       </td>
     </tr>

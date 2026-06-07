@@ -12,6 +12,7 @@ import PageHeader from '../../components/common/PageHeader'
 import OrdersTable from '../../components/orders/OrdersTable'
 import SectionCard from '../../components/ui/SectionCard'
 import StatCard from '../../components/ui/StatCard'
+import { useAuth } from '../../context/AuthContext'
 import { useAsyncData } from '../../hooks/useAsyncData'
 import {
   cancelOrder,
@@ -22,6 +23,11 @@ import {
 
 function OrdersListPage() {
   const navigate = useNavigate()
+  const { can } = useAuth()
+  const canCreate = can('order.create')
+  const canKitchen = can('order.kitchen')
+  const canBill = can('order.bill')
+
   const {
     data: orders,
     setData: setOrders,
@@ -127,10 +133,12 @@ function OrdersListPage() {
         title="Buyurtmalar ro‘yxati"
         description="Tizimdagi joriy buyurtmalarni boshqaring va oshxona holatini kuzating."
         actions={
-          <Link to="/orders/create" className="primary-button">
-            <Plus size={16} aria-hidden="true" />
-            Buyurtma yaratish
-          </Link>
+          canCreate ? (
+            <Link to="/orders/create" className="primary-button">
+              <Plus size={16} aria-hidden="true" />
+              Buyurtma yaratish
+            </Link>
+          ) : null
         }
       />
 
@@ -150,17 +158,21 @@ function OrdersListPage() {
         title="Buyurtmalar"
         description="Buyurtmalarni tayyorlash, bekor qilish va hisob yaratish."
       >
-        <div className="orders-toolbar">
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={handleUndoLastAction}
-            disabled={isUndoLoading}
-          >
-            <RotateCcw size={16} aria-hidden="true" />
-            {isUndoLoading ? 'Bekor qilinmoqda' : 'Oxirgi amalni bekor qilish'}
-          </button>
-        </div>
+        {canKitchen ? (
+          <div className="orders-toolbar">
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={handleUndoLastAction}
+              disabled={isUndoLoading}
+            >
+              <RotateCcw size={16} aria-hidden="true" />
+              {isUndoLoading
+                ? 'Bekor qilinmoqda'
+                : 'Oxirgi amalni bekor qilish'}
+            </button>
+          </div>
+        ) : null}
 
         {actionError ? (
           <p className="orders-action-error">
@@ -174,6 +186,8 @@ function OrdersListPage() {
           isLoading={isLoading}
           error={loadError}
           actionLoadingId={actionLoadingId}
+          canKitchen={canKitchen}
+          canBill={canBill}
           onPrepare={handlePrepareOrder}
           onCancel={handleCancelOrder}
           onGenerateBill={handleGenerateBill}

@@ -5,29 +5,30 @@ import LoadingSpinner from '../ui/LoadingSpinner'
 const roleOptions = [
   { value: 'WAITER', label: 'Ofitsiant' },
   { value: 'MANAGER', label: 'Menejer' },
+  { value: 'CHEF', label: 'Oshpaz' },
   { value: 'CASHIER', label: 'Kassir' },
 ]
 
 const initialFormData = {
   fullName: '',
-  email: '',
+  phoneNumber: '',
   password: '',
   role: 'WAITER',
 }
 
 function validateStaffForm(formData) {
   const errors = {}
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const phoneRegex = /^\+?\d{9,15}$/
   const allowedRoles = roleOptions.map((role) => role.value)
 
   if (!formData.fullName.trim()) {
     errors.fullName = 'To‘liq ism kiritilishi kerak.'
   }
 
-  if (!formData.email.trim()) {
-    errors.email = 'Email kiritilishi kerak.'
-  } else if (!emailRegex.test(formData.email.trim())) {
-    errors.email = 'To‘g‘ri email manzil kiriting.'
+  if (!formData.phoneNumber.trim()) {
+    errors.phoneNumber = 'Telefon raqam kiritilishi kerak.'
+  } else if (!phoneRegex.test(formData.phoneNumber.trim())) {
+    errors.phoneNumber = 'To‘g‘ri telefon raqam kiriting (masalan: +998901112233).'
   }
 
   if (!formData.password) {
@@ -75,7 +76,7 @@ function StaffForm({ onSubmit, isSubmitting, submitError, successMessage }) {
 
     const wasCreated = await onSubmit({
       fullName: formData.fullName.trim(),
-      email: formData.email.trim(),
+      phoneNumber: formData.phoneNumber.trim(),
       password: formData.password,
       role: formData.role,
     })
@@ -103,16 +104,18 @@ function StaffForm({ onSubmit, isSubmitting, submitError, successMessage }) {
         </label>
 
         <label className="form-field">
-          <span>Email</span>
+          <span>Telefon raqam</span>
           <input
-            type="email"
-            name="email"
-            value={formData.email}
+            type="tel"
+            name="phoneNumber"
+            value={formData.phoneNumber}
             onChange={handleChange}
-            placeholder="ali@biteplate.com"
+            placeholder="+998901112233"
             disabled={isSubmitting}
           />
-          {validationErrors.email ? <small>{validationErrors.email}</small> : null}
+          {validationErrors.phoneNumber ? (
+            <small>{validationErrors.phoneNumber}</small>
+          ) : null}
         </label>
 
         <label className="form-field">

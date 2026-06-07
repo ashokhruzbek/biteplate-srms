@@ -3,6 +3,15 @@
 
 const prisma = require("../prisma/client");
 
+const PUBLIC_FIELDS = {
+  id: true,
+  fullName: true,
+  phoneNumber: true,
+  email: true,
+  role: true,
+  createdAt: true,
+};
+
 class StaffRepository {
   // Yangi xodim qo'shish
   async createStaff(staffData) {
@@ -10,10 +19,12 @@ class StaffRepository {
       const staff = await prisma.staff.create({
         data: {
           fullName: staffData.fullName,
-          email: staffData.email,
+          phoneNumber: staffData.phoneNumber,
+          email: staffData.email || null,
           password: staffData.password, // Note: real loyihada hash qilish kerak
           role: staffData.role,
         },
+        select: PUBLIC_FIELDS,
       });
       return staff;
     } catch (error) {
@@ -25,13 +36,7 @@ class StaffRepository {
   async getAllStaff() {
     try {
       const staffList = await prisma.staff.findMany({
-        select: {
-          id: true,
-          fullName: true,
-          email: true,
-          role: true,
-          createdAt: true,
-        },
+        select: PUBLIC_FIELDS,
       });
       return staffList;
     } catch (error) {
@@ -44,13 +49,7 @@ class StaffRepository {
     try {
       const staff = await prisma.staff.findUnique({
         where: { id: parseInt(id) },
-        select: {
-          id: true,
-          fullName: true,
-          email: true,
-          role: true,
-          createdAt: true,
-        },
+        select: PUBLIC_FIELDS,
       });
       return staff;
     } catch (error) {
@@ -58,15 +57,27 @@ class StaffRepository {
     }
   }
 
-  // Email bo'yicha xodim mavjudligini tekshirish
-  async checkEmailExists(email) {
+  // Telefon raqam bo'yicha xodim mavjudligini tekshirish
+  async checkPhoneExists(phoneNumber) {
     try {
       const staff = await prisma.staff.findUnique({
-        where: { email },
+        where: { phoneNumber },
       });
       return staff ? true : false;
     } catch (error) {
-      throw new Error(`Email tekshirishda xato: ${error.message}`);
+      throw new Error(`Telefon tekshirishda xato: ${error.message}`);
+    }
+  }
+
+  // Login uchun: telefon bo'yicha xodimni parol bilan birga topish
+  async findByPhoneWithPassword(phoneNumber) {
+    try {
+      const staff = await prisma.staff.findUnique({
+        where: { phoneNumber },
+      });
+      return staff;
+    } catch (error) {
+      throw new Error(`Xodimni topishda xato: ${error.message}`);
     }
   }
 }

@@ -24,6 +24,10 @@ const swaggerDefinition = {
   ],
   tags: [
     {
+      name: "Authentication",
+      description: "Staff login through phone number and password (lightweight, no JWT).",
+    },
+    {
       name: "Staff Management",
       description: "Create and retrieve restaurant staff records.",
     },
@@ -57,7 +61,12 @@ const swaggerDefinition = {
         properties: {
           id: { type: "integer", example: 1 },
           fullName: { type: "string", example: "Ali Karimov" },
-          email: { type: "string", example: "ali.karimov@biteplate.com" },
+          phoneNumber: { type: "string", example: "+998901112233" },
+          email: {
+            type: "string",
+            nullable: true,
+            example: "ali.karimov@biteplate.com",
+          },
           role: {
             type: "string",
             enum: ["MANAGER", "WAITER", "CHEF", "CASHIER"],
@@ -169,12 +178,37 @@ const swaggerDefinition = {
       },
       StaffCreateRequest: {
         type: "object",
-        required: ["fullName", "email", "password", "role"],
+        required: ["fullName", "phoneNumber", "password", "role"],
         properties: {
           fullName: { type: "string", example: "Ali Karimov" },
-          email: { type: "string", example: "ali.karimov@biteplate.com" },
+          phoneNumber: { type: "string", example: "+998901112233" },
           password: { type: "string", example: "secure123" },
-          role: { type: "string", example: "WAITER" },
+          role: {
+            type: "string",
+            enum: ["MANAGER", "WAITER", "CHEF", "CASHIER"],
+            example: "WAITER",
+          },
+        },
+      },
+      LoginRequest: {
+        type: "object",
+        required: ["phoneNumber", "password"],
+        properties: {
+          phoneNumber: { type: "string", example: "+998901112233" },
+          password: { type: "string", example: "secure123" },
+        },
+      },
+      LoginResponse: {
+        type: "object",
+        properties: {
+          id: { type: "integer", example: 1 },
+          fullName: { type: "string", example: "Ali Valiyev" },
+          phoneNumber: { type: "string", example: "+998901112233" },
+          role: {
+            type: "string",
+            enum: ["MANAGER", "WAITER", "CHEF", "CASHIER"],
+            example: "WAITER",
+          },
         },
       },
       TableCreateRequest: {
@@ -284,6 +318,52 @@ const swaggerDefinition = {
     },
   },
   paths: {
+    "/api/auth/login": {
+      post: {
+        tags: ["Authentication"],
+        summary: "Staff login",
+        description:
+          "Authenticates a staff member with phone number and password. Returns basic user data without any token (lightweight assignment scope).",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/LoginRequest" },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Login successful.",
+            content: {
+              "application/json": {
+                example: {
+                  success: true,
+                  message: "Tizimga muvaffaqiyatli kirildi",
+                  data: {
+                    id: 1,
+                    fullName: "Ali Valiyev",
+                    phoneNumber: "+998901112233",
+                    role: "WAITER",
+                  },
+                },
+              },
+            },
+          },
+          401: {
+            description: "Invalid credentials.",
+            content: {
+              "application/json": {
+                example: {
+                  success: false,
+                  message: "Telefon raqam yoki parol noto'g'ri",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     "/api/staff": {
       post: {
         tags: ["Staff Management"],
@@ -308,7 +388,8 @@ const swaggerDefinition = {
                   data: {
                     id: 1,
                     fullName: "Ali Karimov",
-                    email: "ali.karimov@biteplate.com",
+                    phoneNumber: "+998901112233",
+                    email: null,
                     role: "WAITER",
                     createdAt: "2026-06-06T10:00:00.000Z",
                   },
@@ -335,7 +416,8 @@ const swaggerDefinition = {
                     {
                       id: 1,
                       fullName: "Ali Karimov",
-                      email: "ali.karimov@biteplate.com",
+                      phoneNumber: "+998901112233",
+                      email: null,
                       role: "WAITER",
                     },
                   ],

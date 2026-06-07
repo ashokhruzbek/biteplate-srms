@@ -3,36 +3,44 @@
 
 const StaffRepository = require("../repositories/StaffRepository");
 
+const VALID_ROLES = ["MANAGER", "WAITER", "CHEF", "CASHIER"];
+// Oddiy telefon format: + bilan boshlanib, 9-15 ta raqam (masalan +998901112233)
+const PHONE_REGEX = /^\+?\d{9,15}$/;
+
 class StaffService {
   // Xodim qo'shish - validation va logika
-  async createStaff(fullName, email, password, role) {
+  async createStaff(fullName, phoneNumber, password, role) {
     // 1. Kerakli fieldlarni tekshirish
-    if (!fullName || !email || !password || !role) {
+    if (!fullName || !phoneNumber || !password || !role) {
       throw new Error("Barcha maydonlar to'ldirilishi kerak");
     }
 
-    // 2. Email formatini tekshirish
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      throw new Error("Email formati noto'g'ri");
+    // 2. Telefon raqam formatini tekshirish
+    const normalizedPhone = String(phoneNumber).trim();
+    if (!PHONE_REGEX.test(normalizedPhone)) {
+      throw new Error("Telefon raqam formati noto'g'ri (masalan: +998901112233)");
     }
 
-    // 3. Rol (ro'y) tekshirish
-    const validRoles = ["MANAGER", "WAITER", "CHEF", "CASHIER"];
-    if (!validRoles.includes(role)) {
+    // 3. Parol uzunligini tekshirish
+    if (String(password).length < 6) {
+      throw new Error("Parol kamida 6 belgidan iborat bo'lishi kerak");
+    }
+
+    // 4. Rol tekshirish
+    if (!VALID_ROLES.includes(role)) {
       throw new Error("Rol xato. Mumkin: MANAGER, WAITER, CHEF, CASHIER");
     }
 
-    // 4. Email mavjudligini tekshirish
-    const emailExists = await StaffRepository.checkEmailExists(email);
-    if (emailExists) {
-      throw new Error("Bu email allaqachon ro'yxatdan o'tgan");
+    // 5. Telefon raqam mavjudligini tekshirish
+    const phoneExists = await StaffRepository.checkPhoneExists(normalizedPhone);
+    if (phoneExists) {
+      throw new Error("Bu telefon raqam allaqachon ro'yxatdan o'tgan");
     }
 
-    // 5. Xodimni qo'shish
+    // 6. Xodimni qo'shish
     const newStaff = await StaffRepository.createStaff({
       fullName,
-      email,
+      phoneNumber: normalizedPhone,
       password,
       role,
     });
@@ -54,7 +62,7 @@ class StaffService {
     }
 
     const staff = await StaffRepository.getStaffById(id);
-    
+
     if (!staff) {
       throw new Error("Xodim topilmadi");
     }

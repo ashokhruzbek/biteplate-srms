@@ -8,6 +8,8 @@ function OrdersTable({
   isLoading,
   error,
   actionLoadingId,
+  canKitchen = true,
+  canBill = true,
   onPrepare,
   onCancel,
   onGenerateBill,
@@ -56,6 +58,8 @@ function OrdersTable({
               key={order.id}
               order={order}
               isActionLoading={actionLoadingId === order.id}
+              canKitchen={canKitchen}
+              canBill={canBill}
               onPrepare={onPrepare}
               onCancel={onCancel}
               onGenerateBill={onGenerateBill}
