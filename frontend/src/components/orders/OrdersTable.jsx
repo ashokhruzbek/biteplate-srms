@@ -1,6 +1,6 @@
 import { AlertCircle, ClipboardList } from 'lucide-react'
 import EmptyState from '../ui/EmptyState'
-import LoadingSpinner from '../ui/LoadingSpinner'
+import { TableSkeleton } from '../ui/Skeleton'
 import OrdersTableRow from './OrdersTableRow'
 
 function OrdersTable({
@@ -13,11 +13,7 @@ function OrdersTable({
   onGenerateBill,
 }) {
   if (isLoading) {
-    return (
-      <div className="orders-table__feedback">
-        <LoadingSpinner label="Buyurtmalar yuklanmoqda" />
-      </div>
-    )
+    return <TableSkeleton rows={5} columns={7} />
   }
 
   if (error) {

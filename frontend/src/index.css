@@ -1,15 +1,79 @@
 :root {
-  --color-background: #f6f7f9;
+  --color-background: #f4f6f8;
   --color-surface: #ffffff;
   --color-surface-muted: #f1f5f4;
-  --color-border: #dfe5e2;
+  --color-surface-subtle: #fafbfc;
+  --color-border: #e3e8e6;
+  --color-border-strong: #d3dbd8;
   --color-text: #23302c;
   --color-text-muted: #6c7a76;
-  --color-heading: #111c18;
-  --color-primary: #256d59;
+  --color-text-subtle: #97a29e;
+  --color-heading: #0f1a16;
+  --color-primary: #1f6b54;
+  --color-primary-hover: #1a5a47;
   --color-primary-soft: #e8f3ef;
+  --color-primary-ring: rgba(31, 107, 84, 0.16);
   --color-accent: #b85f1f;
-  --shadow-soft: 0 16px 35px rgba(17, 24, 39, 0.06);
+
+  /* Semantic state colors */
+  --color-success: #1f6b54;
+  --color-success-soft: #e8f3ef;
+  --color-success-border: #c2ded3;
+  --color-warning: #8a6420;
+  --color-warning-soft: #fbf4e4;
+  --color-warning-border: #ead7a8;
+  --color-danger: #a23c2c;
+  --color-danger-soft: #fbeeeb;
+  --color-danger-border: #e7c6c1;
+  --color-info: #285b78;
+  --color-info-soft: #eef5fa;
+  --color-info-border: #c8d8e6;
+
+  /* Spacing scale (4px base rhythm) */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Radius scale */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Shadow scale */
+  --shadow-xs: 0 1px 2px rgba(15, 26, 22, 0.05);
+  --shadow-sm: 0 1px 3px rgba(15, 26, 22, 0.08), 0 1px 2px rgba(15, 26, 22, 0.04);
+  --shadow-soft: 0 1px 2px rgba(15, 26, 22, 0.04),
+    0 8px 24px rgba(15, 26, 22, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 26, 22, 0.08),
+    0 12px 32px rgba(15, 26, 22, 0.06);
+  --shadow-lg: 0 12px 28px rgba(15, 26, 22, 0.1),
+    0 24px 60px rgba(15, 26, 22, 0.08);
+  --shadow-ring: 0 0 0 3px var(--color-primary-ring);
+
+  /* Typography scale */
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 28px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 0.14s var(--ease-out);
+  --transition-base: 0.2s var(--ease-out);
+
+  --sidebar-width: 272px;
+  --navbar-height: 72px;
+
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', sans-serif;
 
@@ -62,4 +126,20 @@ h3 {
 #root {
   height: 100%;
   min-height: 100vh;
+}
+
+::selection {
+  background: var(--color-primary-ring);
+  color: var(--color-heading);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,16 +1,12 @@
 import { ClipboardList } from 'lucide-react'
 import EmptyState from '../ui/EmptyState'
-import LoadingSpinner from '../ui/LoadingSpinner'
+import { TableSkeleton } from '../ui/Skeleton'
 import StatusBadge from '../ui/StatusBadge'
 import { formatCurrency, formatOrderNumber } from '../../utils/formatters'
 
 function RecentOrdersTable({ orders, isLoading, error }) {
   if (isLoading) {
-    return (
-      <div className="dashboard-section__feedback">
-        <LoadingSpinner label="So‘nggi buyurtmalar yuklanmoqda" />
-      </div>
-    )
+    return <TableSkeleton rows={5} columns={5} />
   }
 
   if (error) {

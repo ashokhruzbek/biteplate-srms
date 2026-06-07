@@ -1,6 +1,6 @@
 import { ClipboardList } from 'lucide-react'
 import EmptyState from '../ui/EmptyState'
-import LoadingSpinner from '../ui/LoadingSpinner'
+import { TableSkeleton } from '../ui/Skeleton'
 import StatusBadge from '../ui/StatusBadge'
 import {
   formatCurrency,
@@ -57,11 +57,7 @@ function HistoryTable({
   error,
 }) {
   if (isLoading) {
-    return (
-      <div className="history-table__feedback">
-        <LoadingSpinner label="Tarix yuklanmoqda" />
-      </div>
-    )
+    return <TableSkeleton rows={6} columns={6} />
   }
 
   if (error) {

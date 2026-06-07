@@ -1,8 +1,12 @@
-function PageHeader({ title, description }) {
+function PageHeader({ title, description, actions, eyebrow }) {
   return (
     <section className="page-header" aria-labelledby="page-title">
-      <h1 id="page-title">{title}</h1>
-      <p>{description}</p>
+      <div className="page-header__copy">
+        {eyebrow ? <span className="page-header__eyebrow">{eyebrow}</span> : null}
+        <h1 id="page-title">{title}</h1>
+        {description ? <p>{description}</p> : null}
+      </div>
+      {actions ? <div className="page-header__actions">{actions}</div> : null}
     </section>
   )
 }

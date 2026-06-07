@@ -10,7 +10,7 @@ function MainLayout() {
 
   useEffect(() => {
     setIsSidebarOpen(false)
-  }, [location.pathname, location.hash])
+  }, [location.pathname])
 
   useEffect(() => {
     const contentElement = contentRef.current
@@ -19,20 +19,8 @@ function MainLayout() {
       return
     }
 
-    if (!location.hash) {
-      contentElement.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-
-    window.requestAnimationFrame(() => {
-      const targetId = decodeURIComponent(location.hash.slice(1))
-      const targetElement = document.getElementById(targetId)
-
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    })
-  }, [location.pathname, location.hash])
+    contentElement.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location.pathname])
 
   return (
     <div className="app-shell">

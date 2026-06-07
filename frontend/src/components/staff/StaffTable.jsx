@@ -1,15 +1,11 @@
 import { AlertCircle, UsersRound } from 'lucide-react'
 import EmptyState from '../ui/EmptyState'
-import LoadingSpinner from '../ui/LoadingSpinner'
+import { TableSkeleton } from '../ui/Skeleton'
 import StaffTableRow from './StaffTableRow'
 
 function StaffTable({ staff, isLoading, error }) {
   if (isLoading) {
-    return (
-      <div className="staff-table__feedback">
-        <LoadingSpinner label="Xodimlar yuklanmoqda" />
-      </div>
-    )
+    return <TableSkeleton rows={5} columns={4} />
   }
 
   if (error) {

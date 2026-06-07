@@ -1,4 +1,4 @@
-import LoadingSpinner from '../ui/LoadingSpinner'
+import Skeleton from '../ui/Skeleton'
 
 function DashboardStatCard({
   title,
@@ -16,7 +16,7 @@ function DashboardStatCard({
       <div className="dashboard-stat-card__content">
         <span>{title}</span>
         {isLoading ? (
-          <LoadingSpinner label="Yuklanmoqda" />
+          <Skeleton variant="line" width="55%" height="26px" />
         ) : (
           <strong>{error ? '--' : value}</strong>
         )}

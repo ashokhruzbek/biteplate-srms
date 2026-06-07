@@ -1,4 +1,4 @@
-import LoadingSpinner from './LoadingSpinner'
+import Skeleton from './Skeleton'
 
 function StatCard({
   title,
@@ -18,7 +18,7 @@ function StatCard({
       <div className="stat-card__content">
         <span>{title}</span>
         {isLoading ? (
-          <LoadingSpinner label="Yuklanmoqda" />
+          <Skeleton variant="line" width="60%" height="26px" />
         ) : (
           <strong>{displayValue}</strong>
         )}
