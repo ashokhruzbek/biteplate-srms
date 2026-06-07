@@ -69,7 +69,7 @@ Har bir qism o'zining alohida README'siga ega:
 ---
 ## Live Demo
 
-- **Frontend:** _placeholder (Vercel URL shu yerga qo'yiladi)_
+- **Frontend:** https://biteplate-srms.vercel.app
 - **Backend:** https://biteplate-srms.onrender.com
 - **API Docs (Swagger):** https://biteplate-srms.onrender.com/api-docs
 
