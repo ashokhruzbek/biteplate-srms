@@ -112,4 +112,4 @@ Barcha endpoint'lar Swagger orqali hujjatlashtirilgan:
 
 ## Author
 
-- **Author:** _placeholder (ism va GitHub profili shu yerga qo'yiladi)_
+- **Author:** 23-309 | Shoxruzbek Abduraxmonov
